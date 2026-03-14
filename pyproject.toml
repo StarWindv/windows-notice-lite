@@ -4,7 +4,12 @@ build-backend = "maturin"
 
 [project]
 name = "win_notice_lite"
+urls = { "Homepage" = "https://github.com/starwindv/windows-notice-lite.git" }
+author = [
+    { name="星灿长风v(StarWindv)", email="starwindv.stv@gmail.com" }
+]
 requires-python = ">=3.10"
+readme = "./readme.md"
 classifiers = [
     "Programming Language :: Rust",
     "Programming Language :: Python :: Implementation :: CPython"
