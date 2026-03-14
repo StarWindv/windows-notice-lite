@@ -1,6 +1,5 @@
 use super::toast::Toast;
 use pyo3::pyclass;
-use pyo3::{PyResult, pymethods};
 
 ///
 /// Attributes:
@@ -17,12 +16,4 @@ use pyo3::{PyResult, pymethods};
 pub struct Diff {
     pub new: Vec<Toast>,
     pub remove: Vec<Toast>,
-}
-
-#[pymethods]
-impl Diff {
-    #[new]
-    pub fn __init__(new: Vec<Toast>, remove: Vec<Toast>) -> PyResult<Self> {
-        Ok(Self { new, remove })
-    }
 }

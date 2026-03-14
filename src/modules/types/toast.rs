@@ -1,4 +1,4 @@
-use pyo3::{PyResult, pyclass, pymethods};
+use pyo3::pyclass;
 use serde::Serialize;
 
 /// 代表单个通知的对象结构
@@ -59,38 +59,4 @@ pub struct Toast {
     pub creation_time: String,
     pub fingerprint: String,
     pub fingerprint_without_time: String,
-}
-
-#[pymethods]
-impl Toast {
-    #[new]
-    pub fn __init__(
-        id: u32,
-        name: String,
-        logo_uri: String,
-        title: String,
-        message: String,
-        hero_image_uri: String,
-        inline_images: Vec<String>,
-        tag: String,
-        group: String,
-        creation_time: String,
-        fingerprint: String,
-        fingerprint_without_time: String,
-    ) -> PyResult<Self> {
-        Ok(Self {
-            id,
-            name,
-            logo_uri,
-            title,
-            message,
-            hero_image_uri,
-            inline_images,
-            tag,
-            group,
-            creation_time,
-            fingerprint,
-            fingerprint_without_time,
-        })
-    }
 }

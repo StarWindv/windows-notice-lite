@@ -1,99 +1,12 @@
-use super::types::diff::Diff;
-use super::types::listener::Listener;
-use super::types::mutable_toast::MutableToast;
-use super::types::toast::Toast;
-use super::utils::parse_notification;
-
+use crate::modules::types::diff::Diff;
+use crate::modules::types::differ::Differ;
+use crate::modules::types::toast::Toast;
+use pyo3::pymethods;
 use std::collections::HashSet;
 
-use pyo3::prelude::{PyModule, PyModuleMethods};
-use pyo3::{Bound, Python};
-use pyo3::{PyResult, pymethods, pymodule};
-
-use windows::UI::Notifications::Management::{
-    UserNotificationListener, UserNotificationListenerAccessStatus,
-};
-use windows::UI::Notifications::{NotificationKinds, UserNotification};
-use windows_collections::IVectorView;
-use windows_future::IAsyncOperation;
-
-#[pymodule]
-fn win_notice_lite(_py: Python<'_>, m: &Bound<'_, PyModule>) -> PyResult<()> {
-    m.add_class::<Listener>()?;
-    m.add_class::<Toast>()?;
-    m.add_class::<MutableToast>()?;
-    m.add_class::<Diff>()?;
-    Ok(())
-}
-
+/// 通知列表差异计算工具类
 #[pymethods]
-impl Listener {
-    /// 创建通知监听器实例
-    ///
-    /// Returns:
-    ///
-    ///     self (object): Result<Self> - 成功返回Listener实例, 失败返回错误
-    #[new]
-    pub fn new() -> PyResult<Self> {
-        let listener = UserNotificationListener::Current().unwrap();
-        Ok(Self { listener })
-    }
-
-    /// 请求通知访问权限 (提权)
-    ///
-    /// Type:
-    ///
-    ///     async: 异步接口, 需要使用 `await` 来获取数据
-    ///
-    /// Notes:
-    ///     建议从UI线程调用, 否则容易报错
-    ///
-    ///     但这是 C-Sharp 的规矩, 我也不知道转 Python 会发生什么, 大家用着看就是了
-    ///
-    /// Returns:
-    ///
-    ///     str: PyResult<String> -> IAsyncOperation<UserNotificationListenerAccessStatus>
-    ///         也就是说拿到的就是权限字符串
-    pub async fn elevate_privilege(&self) -> PyResult<String> {
-        let operation: IAsyncOperation<UserNotificationListenerAccessStatus> =
-            self.listener.RequestAccessAsync().unwrap();
-        let status = operation.await.unwrap();
-        Ok(format!("{:?}", status))
-    }
-
-    /// 获取当前系统中所有Toast类型的通知
-    ///
-    /// Type:
-    ///
-    ///     async: 异步接口, 需要使用 `await` 来获取数据
-    ///
-    /// 逻辑:
-    /// 1. 检查通知访问权限, 无权限直接返回空数组
-    /// 2. 异步获取所有Toast类型通知, 解析为Toast结构体数组
-    ///
-    /// Returns:
-    ///
-    ///     list[Toast]: Result<Vec<Toast>> - 成功返回Toast数组, 失败返回Windows API错误
-    pub async fn get_all_notifications(&self) -> PyResult<Vec<Toast>> {
-        let status = self.listener.GetAccessStatus().unwrap();
-        if status != UserNotificationListenerAccessStatus::Allowed {
-            return Ok(vec![]);
-        }
-
-        let operation: IAsyncOperation<IVectorView<UserNotification>> = self
-            .listener
-            .GetNotificationsAsync(NotificationKinds::Toast)
-            .unwrap();
-        let raw_notifications = operation.await.unwrap();
-
-        let mut notifications = Vec::with_capacity(raw_notifications.Size().unwrap() as usize);
-        for i in 0..raw_notifications.Size().unwrap() {
-            let notif = raw_notifications.GetAt(i).unwrap();
-            notifications.push(parse_notification(&notif)?);
-        }
-        Ok(notifications)
-    }
-
+impl Differ {
     /// 基于完整指纹 (含时间) 对比通知差异
     ///
     /// 逻辑:

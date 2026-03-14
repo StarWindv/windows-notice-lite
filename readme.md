@@ -13,8 +13,8 @@
       - [2.2.3 编译](#223-编译)
       - [2.2.4 安装](#224-安装)
   - [三、文档](#三文档)
-  - [四、许可证](#四许可证)
-
+  - [四、破坏性更新](#四破坏性更新)
+  - [五、许可证](#五许可证)
 
 ---
 
@@ -77,7 +77,13 @@ python -m pip install {path_to_wheel}
 
 ---
 
-## 四、许可证
+## 四、破坏性更新
+
+你可以在[BREAKING.md](https://github.com/starwindv/windows-notice-lite/blob/main/BREAKING.md)中找到各版本可能存在的破坏性更新说明
+
+---
+
+## 五、许可证
 
 本项目遵循 GPL-3.0 许可证, 但请注意: 对于列出在[文件](https://github.com/starwindv/windows-notice-lite/blob/main/AUTHORS)中的开发者, 享有 GPL-3.0 许可证例外, 允许他们将本项目用于`https://github.com/Python-island/Python-island`下的每个`branch`项目的开发中, 并且不需要受到传染性影响.
 
