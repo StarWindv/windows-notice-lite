@@ -526,8 +526,6 @@ A method that concatenates the attributes in a single notification with spaces a
 |------------|-----------------|
 | `Json`     | JSON format     |
 | `Yaml`     | YAML format     |
-| `Toml`     | TOML format     |
-| `XML`      | XML format      |
 
 ---
 
