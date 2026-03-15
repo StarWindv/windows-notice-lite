@@ -13,6 +13,7 @@
     - [v0.0.1a0](#v001a0)
     - [v0.0.2](#v002)
     - [v0.0.3](#v003)
+    - [v0.0.4](#v004)
 
 ---
 
@@ -71,7 +72,7 @@
 
 ---
 
-### 0.0.4
+### v0.0.4
 
 新 API:
  - `DiffTool.generate_fingerprint(Toast, include_time: bool)`: 为指定的单个通知生成指纹
