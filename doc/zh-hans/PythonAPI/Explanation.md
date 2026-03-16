@@ -649,7 +649,7 @@ print(yaml_str)
 import win_notice_lite as wnl
 
 listener = wnl.Listener()
-polling = wnl.Polling(listener, interval=1000)
+polling = wnl.features.Polling(listener, interval=1000)
 ```
 
 ---

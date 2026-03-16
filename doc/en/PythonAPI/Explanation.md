@@ -643,7 +643,7 @@ Returns a new `Polling` instance.
 import win_notice_lite as wnl
 
 listener = wnl.Listener()
-polling = wnl.Polling(listener, interval=1000)
+polling = wnl.fetures.Polling(listener, interval=1000)
 ```
 
 ---
