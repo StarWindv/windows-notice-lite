@@ -154,4 +154,6 @@ We did consider using the fallback solution mentioned in the comments of that is
 
 ### 1.4 Outcome
 
-The above summarizes why this project does not include event notification. We can only hope that Microsoft changes its mind and fixes this bug, whether intentional or not. When that happens, the code can be merged directly.
+~~The above summarizes why this project does not include event notification. We can only hope that Microsoft changes its mind and fixes this bug, whether intentional or not. When that happens, the code can be merged directly.~~
+
+[See Resolve](../PythonAPI/Explanation.md#IX-polling)
