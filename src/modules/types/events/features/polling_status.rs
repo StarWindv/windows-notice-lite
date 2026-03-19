@@ -5,7 +5,7 @@ use pyo3::pyclass;
 /// 不可被实例化
 ///
 /// Attributes:
-/// 
+///
 ///     Success: 操作成功完成
 ///     Failed: 操作失败
 #[pyclass(from_py_object)]

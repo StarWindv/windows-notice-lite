@@ -166,10 +166,9 @@ impl DiffTool {
     #[staticmethod]
     pub fn serialize_one(notification: &Toast, to: SerializeFormat) -> Result<String, PyErr> {
         match to {
-            SerializeFormat::Json => {
-                Ok(serde_json::to_string_pretty(&notification)
-                    .unwrap_or_else(|_| "{}".to_string()))
-            }
+            SerializeFormat::Json => Ok(
+                serde_json::to_string_pretty(&notification).unwrap_or_else(|_| "{}".to_string())
+            ),
             SerializeFormat::Yaml => {
                 Ok(serde_yaml::to_string(&notification).unwrap_or_else(|_| "{}".to_string()))
             }

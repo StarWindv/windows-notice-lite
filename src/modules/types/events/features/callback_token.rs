@@ -1,6 +1,6 @@
 use pyo3::pyclass;
-use std::sync::atomic::AtomicU64;
 use serde::Serialize;
+use std::sync::atomic::AtomicU64;
 
 pub static TOKEN_COUNTER: AtomicU64 = AtomicU64::new(0);
 
@@ -10,7 +10,7 @@ pub static TOKEN_COUNTER: AtomicU64 = AtomicU64::new(0);
 ///
 /// Attributes:
 ///
-///     id: 回调函数的唯一标识符, 由系统自动生成. 
+///     id: 回调函数的唯一标识符, 由系统自动生成.
 #[pyclass(from_py_object, get_all)]
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Serialize)]
 pub struct CallbackToken {

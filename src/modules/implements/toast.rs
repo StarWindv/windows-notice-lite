@@ -1,10 +1,5 @@
-use crate::modules::types::{
-    toast::Toast,
-    diff_tool::DiffTool,
-    serialize_format::SerializeFormat
-};
+use crate::modules::types::{diff_tool::DiffTool, serialize_format::SerializeFormat, toast::Toast};
 use pyo3::{PyResult, pymethods};
-
 
 #[pymethods]
 impl Toast {

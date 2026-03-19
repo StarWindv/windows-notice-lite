@@ -1,7 +1,7 @@
 use crate::modules::types::events::features::callback_token::CallbackToken;
 
-use std::sync::atomic::Ordering;
 use pyo3::pymethods;
+use std::sync::atomic::Ordering;
 
 #[pymethods]
 impl CallbackToken {
