@@ -25,7 +25,7 @@ use pyo3::{Py, PyAny, pyclass};
 pub struct Polling {
     pub listener: Listener,
     pub interval: i32,
-    pub registry: Arc<Mutex<HashMap<CallbackToken, (Py<PyAny>, EventsType, bool)>>>,
+    pub registry: Arc<Mutex<HashMap<CallbackToken, (Py<PyAny>, EventsType, bool, String)>>>,
     pub running: Arc<AtomicBool>,
     pub interval_shared: Arc<Mutex<i32>>,
 }

@@ -1,8 +1,5 @@
 # 破坏性更新与更新说明
-
 此文件用于说明各版本中 Python 侧 API 的变动
-
----
 
 ## 目录
 - [破坏性更新与更新说明](#破坏性更新与更新说明)
@@ -15,69 +12,61 @@
     - [v0.0.4](#v004)
     - [v0.1.0](#v010)
     - [v0.1.1](#v011)
-
----
+    - [v0.1.2](#v012)
 
 ## 详细信息
 
 ### v0.0.1
 此版本是项目的初始版本, 不存在破坏性更新
 
----
-
 ### v0.0.1a0
 此版本实际上是初始版本的补丁, 处理了 readme 中的部分问题, 只是版本号写错了
-
----
 
 ### v0.0.2
 此版本仅做了 API 的位置迁移
 
-| Old API                      | New API                    |
+| 旧 API                        | 新 API                      |
 |------------------------------|----------------------------|
 | `Listener.diff_full`         | `Differ.diff_full`         |
 | `Listener.diff_without_time` | `Differ.diff_without_time` |
 | `Listener.diff_by_id`        | `Differ.diff_by_id`        |
 | `Listener.serialize`         | `Differ.serialize`         |
 
----
-
 ### v0.0.3
 #### 已有接口变化
-| 维度       | 内容                                                                                                  |
-|----------|-----------------------------------------------------------------------------------------------------|
-| API Name | `Listener.elevate_privilege` → `Listener.request_permission`                                        |
-| Args     | `No Args` → `No Args`                                                                               |
-| Returns  | `UserNotificationListenerAccessStatus(0/1/2)`, str → `Unspecified/Allowed/Denied/UnknownError`, str |
+| 维度     | 内容                                                                                                |
+|--------|---------------------------------------------------------------------------------------------------|
+| API 名称 | `Listener.elevate_privilege` → `Listener.request_permission`                                      |
+| 参数     | 无参数 → 无参数                                                                                         |
+| 返回值    | `UserNotificationListenerAccessStatus(0/1/2)`、字符串 → `Unspecified/Allowed/Denied/UnknownError`、字符串 |
 
 #### 名称迁移
-| Old API                     | New API                                                 | Explanation |
-|-----------------------------|---------------------------------------------------------|-------------|
-| `Differ.diff_full`          | `DiffTool.diff_full`                                    | 名称迁移        |
-| `Differ.diff_without_time`  | `DiffTool.diff_without_time`                            | 名称迁移        |
-| `Differ.diff_by_id`         | `DiffTool.diff_by_id`                                   | 名称迁移        |
-| `Differ.serialize([Toast])` | `DiffTool.serialize_to([Toast], Type: SerializeFormat)` | 参数改变、名称迁移   |
-| -                           | `DiffTool.to_json_str([Toast])`                         | 新 API       |
+| 旧 API                       | 新 API                                                   | 说明        |
+|-----------------------------|---------------------------------------------------------|-----------|
+| `Differ.diff_full`          | `DiffTool.diff_full`                                    | 名称迁移      |
+| `Differ.diff_without_time`  | `DiffTool.diff_without_time`                            | 名称迁移      |
+| `Differ.diff_by_id`         | `DiffTool.diff_by_id`                                   | 名称迁移      |
+| `Differ.serialize([Toast])` | `DiffTool.serialize_to([Toast], Type: SerializeFormat)` | 参数改变、名称迁移 |
+| -                           | `DiffTool.to_json_str([Toast])`                         | 新增 API    |
 
 #### 新的类
-
-| 类名              | 类型  | 成员                    | 接口 | 是否可实例化 |
-|-----------------|-----|-----------------------|----|--------|
-| SerializeFormat | 枚举类 | Json, Yaml, Toml, XML | 无  | 否      |
-
----
+| 类名              | 类型  | 成员                 | 接口 | 是否可实例化 |
+|-----------------|-----|--------------------|----|--------|
+| SerializeFormat | 枚举类 | Json、Yaml、Toml、XML | 无  | 否      |
 
 ### v0.0.4
 
 #### 新 API
+
 - `DiffTool.generate_fingerprint(Toast, include_time: bool)`: 为指定的单个通知生成指纹
 - `Toast.from_dict`: 直接从 Python 字典中生成 Toast 对象
 - `MutableToast.from_dict`: 直接从 Python 字典中生成 MutableToast 对象
 
 #### 新的类
+
 | 类名        | 类型  | 作用   | 接口 | 是否可实例化 |
 |-----------|-----|------|----|--------|
-| ToastDict | 普通类 | 类型注解 | 无  | 可以     |
+| ToastDict | 普通类 | 类型注解 | 无  | 是      |
 
 > **注意**: Toast/MutableToast 的 `from_dict` 方法和 `ToastDict` 来自于`__init__.py`文件定义, 并不是 Rust 代码实现的
 
@@ -88,8 +77,6 @@
 **删除原因**:
 - `Toast` 不适合被序列化为这两种格式, 并且实际序列化时一直在报错, 故删除
 
----
-
 ### v0.1.0
 
 #### 新模块: 事件通知系统 (Event Notification System)
@@ -98,12 +85,12 @@
 
 ##### 新的类
 
-| 类名                           | 类型  | 作用        | 接口                                           | 是否可实例化 |
-|------------------------------|-----|-----------|----------------------------------------------|--------|
-| `wnl.features.Polling`       | 普通类 | 事件循环管理器   | `start_all`, `stop_all`, `change_interval` 等 | 可以     |
-| `wnl.features.CallbackToken` | 普通类 | 回调函数唯一标识符 | `id` 属性                                      | 可以     |
-| `wnl.features.PollingStatus` | 枚举类 | 操作状态      | `Success`, `Failed`                          | 否      |
-| `wnl.features.EventsType`    | 枚举类 | 事件类型      | `New`, `Remove`, `All`                       | 否      |
+| 类名                           | 类型  | 作用        | 接口                                         | 是否可实例化 |
+|------------------------------|-----|-----------|--------------------------------------------|--------|
+| `wnl.features.Polling`       | 普通类 | 事件循环管理器   | `start_all`、`stop_all`、`change_interval` 等 | 是      |
+| `wnl.features.CallbackToken` | 普通类 | 回调函数唯一标识符 | `id` 属性                                    | 是      |
+| `wnl.features.PollingStatus` | 枚举类 | 操作状态      | `Success`、`Failed`                         | 否      |
+| `wnl.features.EventsType`    | 枚举类 | 事件类型      | `New`、`Remove`、`All`                       | 否      |
 
 ##### 新的 API
 
@@ -140,8 +127,6 @@ polling.change_interval(2000) # 修改轮询间隔
 polling.stop_all()            # 停止所有
 ```
 
----
-
 ### v0.1.1
 
 #### 新的 API
@@ -150,7 +135,7 @@ polling.stop_all()            # 停止所有
 
 ###### 作用范围
 
-`Toast`, `MutableTOast`, `Diff`, `CallbackToken`
+`Toast`、`MutableTOast`、`Diff`、`CallbackToken`
 
 ###### 修改目的
 
@@ -177,6 +162,7 @@ polling.stop_all()            # 停止所有
 ```
 
 对于 Diff:
+
 ```json
 {
   "new": [
@@ -211,17 +197,40 @@ CallbackToken(number)
 使得输出更加直观
 
 ###### 返回值示例
+```json
+{
+  "CallbackToken(0)": {
+    "handler": "Py(0x1d063df5440)",
+    "events_type": "All",
+    "is_active": true
+  }
+}
+```
+
+### v0.1.2
+
+#### 新的 API
+
+- `wnl.features.Polling.register_with_comment(handler: Callable, comment: str) -> CallbackToken`: 注册回调函数时可添加注释
+- `wnl.features.Polling.change_comment(token: CallbackToken, new_comment: str) -> bool`: 根据回调 Token 修改对应注释
+
+#### 返回值修改
+
+因新增注释功能, `wnl.features.Polling.show_registry` 返回值格式更新为: 
 
 ```json
-  {
+{  
     "CallbackToken(0)": {
-      "handler": "Py(0x1d063df5440)",
-      "events_type": "All",
-      "is_active": true
+        "handler": "Py(0x236355ae0c0)",
+        "events_type": "All",
+        "is_active": true,
+        "comment": "[WNL PlaceHolder] NO COMMENT"
     }
-  }
+}
 ```
+
+**注意**: 使用 `wnl.features.Polling.register_polling_event_callback` 注册的回调, 其注册表注释会使用占位符填充. 
 
 ---
 
-末次编辑日期: 2026年3月18日
+末次编辑日期: 2026年3月20日
