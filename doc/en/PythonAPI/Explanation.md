@@ -6,7 +6,7 @@ This document introduces how to use the compiled binary library, excluding the A
 
 ## Document Version
 
-- 0.1.2
+- 0.1.3
 
 Note that the document version number should update along with the project version.
 

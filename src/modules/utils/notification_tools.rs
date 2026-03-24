@@ -27,12 +27,12 @@ use windows_collections::IVectorView;
 /// ### 返回值
 /// Result<Toast>: 成功返回解析后的Toast, 失败返回Windows API错误
 pub(crate) fn parse_notification(raw: &UserNotification) -> PyResult<Toast> {
-    let id = raw.Id().auto()?;
-    let creation_dt: DateTime = raw.CreationTime().auto()?;
-    let creation_time = creation_dt.UniversalTime.to_string();
+    let id = (&*raw).Id().auto()?;
+    let creation_dt: DateTime = (&*raw).CreationTime().auto()?;
+    let creation_time = (&creation_dt.UniversalTime).to_string();
 
-    let app_info = raw.AppInfo().auto()?;
-    let display_info: AppDisplayInfo = app_info.DisplayInfo().auto()?;
+    let app_info = (&*raw).AppInfo().auto()?;
+    let display_info: AppDisplayInfo = (&app_info).DisplayInfo().auto()?;
     let name = display_info
         .DisplayName()
         .auto()?
@@ -41,21 +41,21 @@ pub(crate) fn parse_notification(raw: &UserNotification) -> PyResult<Toast> {
 
     let logo_uri = String::new();
 
-    let notification_content: Notification = raw.Notification().auto()?;
-    let visual: NotificationVisual = notification_content.Visual().auto()?;
+    let notification_content: Notification = (&*raw).Notification().auto()?;
+    let visual: NotificationVisual = (&notification_content).Visual().auto()?;
     let template_name: HSTRING = KnownNotificationBindings::ToastGeneric().auto()?;
-    let binding: NotificationBinding = visual.GetBinding(&template_name).auto()?;
+    let binding: NotificationBinding = (&visual).GetBinding(&template_name).auto()?;
 
     let texts: IVectorView<AdaptiveNotificationText> = binding.GetTextElements().auto()?;
-    let mut text_vec = Vec::with_capacity(texts.Size().auto()? as usize);
-    for i in 0..texts.Size().auto()? {
-        text_vec.push(texts.GetAt(i).auto()?);
+    let mut text_vec = Vec::with_capacity((&texts).Size().auto()? as usize);
+    for i in 0..(&texts).Size().auto()? {
+        (&mut text_vec).push((&texts).GetAt(i).auto()?);
     }
-    let title = text_vec
+    let title: String = text_vec
         .first()
         .map(|t| t.Text().unwrap().to_string_lossy().to_owned())
         .unwrap_or_default();
-    let message = text_vec
+    let message: String = (&*text_vec)
         .iter()
         .skip(1)
         .map(|t| t.Text().unwrap().to_string_lossy().to_owned())

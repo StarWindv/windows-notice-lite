@@ -89,7 +89,7 @@ impl Listener {
             .auto()?;
         let raw_notifications = operation.await.auto()?;
 
-        let mut notifications = Vec::with_capacity(raw_notifications.Size().auto()? as usize);
+        let mut notifications = Vec::with_capacity((&raw_notifications).Size().auto()? as usize);
         for i in 0..raw_notifications.Size().auto()? {
             let notif = raw_notifications.GetAt(i).auto()?;
             notifications.push(parse_notification(&notif)?);

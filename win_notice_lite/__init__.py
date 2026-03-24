@@ -5,20 +5,15 @@ from typing import (
     TypedDict,
     Optional
 )
-from importlib.metadata import version
 
 from win_notice_lite.win_notice_lite import *
 
 
-__author__ = "星灿长风v(StarWindv)"
-__license__ = "GPL-3.0-only"
-__home__ = "https://github.com/starwindv/windows-notice-lite.git"
-__description__ = """\
-This project is secondary development based on the `windows crate`,\
-primarily wrapping related methods for obtaining desktop toast notifications on Windows systems,\
-and uses PyO3 for Python bindings to provide it as a Python library.
-"""
-__version__ = version(__name__)
+__author__ = win_notice_lite.__author__
+__license__ = win_notice_lite.__license__
+__home__ = win_notice_lite.__home__
+__description__ = win_notice_lite.__description__
+__version__ = win_notice_lite.__version__
 
 
 class ToastDict(TypedDict): # for typing
@@ -71,5 +66,4 @@ __all__ = win_notice_lite.__all__
 del Callable, Union, Type, TypedDict, Optional
 # noinspection PyUnresolvedReferences
 del win_notice_lite
-del version
 del __bind

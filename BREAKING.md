@@ -231,6 +231,12 @@ CallbackToken(number)
 
 **注意**: 使用 `wnl.features.Polling.register_polling_event_callback` 注册的回调, 其注册表注释会使用占位符填充. 
 
+### v0.1.3
+
+此版本将全部的元信息(如`__version__`等)移动至 Rust 侧配合 `env!` 宏进行获取与导出, Python 侧仅做绑定, 解决了下游在使用 `pyinstaller` 打包时因为 `importlib` 导致的可能的问题.
+
+无 API 变更
+
 ---
 
-末次编辑日期: 2026年3月20日
+末次编辑日期: 2026年3月25日
